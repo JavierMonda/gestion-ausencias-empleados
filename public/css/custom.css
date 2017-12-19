@@ -1,0 +1,131 @@
+@import url(https://fonts.googleapis.com/css?family=Alegreya+Sans:300);
+@import url('https://fonts.googleapis.com/css?family=ABeeZee|Dosis');
+
+body {
+  padding-top: 54px;
+}
+@media (min-width: 992px) {
+  body {
+    padding-top: 56px;
+  }
+}
+
+#main {
+  margin-bottom: 30px;
+}
+
+#logo-oasis {
+	max-width: 143px;
+	min-height: 73px;
+}
+.img-muestra {
+	width: 200px;
+	height: 200px;
+	border: 2px solid #DCDCDC;
+}
+
+/* Ordenar tablas */
+table tr th {
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.sorting {
+  background-color: #D4D4D4;
+}
+
+.asc:after {
+  content: ' ↑';
+}
+
+.desc:after {
+  content: " ↓";
+}
+
+.intro {
+  font-family: 'ABeeZee', sans-serif;
+}
+
+
+
+body {
+    /*font-family: 'Alegreya Sans', sans-serif;*/
+    font-family: 'ABeeZee', sans-serif;
+}
+
+/* Sticky footer position and size
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 300px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  /*height: 300px;*/
+}
+
+/* Taller footer on small screens */
+@media (max-width: 34em) {
+    body {
+      margin-bottom: 500px;
+    }
+    .footer {
+      height: 500px;
+    }
+}
+
+/* Sticky footer style and color
+-------------------------------------------------- */
+footer {
+  margin-top: 30px;
+  padding-top: 30px;
+  /*background-color: #292c2f;*/
+  background-color: #e3f2fd;
+  color: black;
+  font-family: 'Dosis', sans-serif;
+}
+
+footer a {
+  color: #999;
+  text-decoration:none;
+}
+
+footer a:hover, footer a:focus {
+  color: #aaa;
+  text-decoration:none;
+  border-bottom:1px dotted #999;
+}
+
+footer .form-control {
+    /*background-color: #1f2022;*/
+    background-color: white;
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.1);
+    border: none;
+    resize: none;
+    color: #d1d2d2;
+    padding: 0.7em 1em;
+}
+
+.navbar {
+  background-color: #e3f2fd;
+  font-family: 'Dosis', sans-serif;
+}
+
+.d-flex {
+  margin-top: 25px;
+}
+
+.card {
+  margin-top: 25px;
+  padding: 10px;
+}
