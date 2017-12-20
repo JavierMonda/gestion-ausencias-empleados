@@ -1,2 +1,2 @@
-# gestion-ausencias-empleados
-GAE, Aplicación para la Gestión de las Ausencias de los Empleados
+# GAE - Gestión de Ausencias de Empleados
+GAE es una aplicación web realizada en Laravel 5.5
