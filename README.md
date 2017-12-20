@@ -6,10 +6,10 @@ Ciclo Formativo de Grado Superior en Administración de Sistemas Informáticos e
 GAE es una aplicación web realizada en Laravel 5.5 para el registro y control de vacaciones y ausencias de los empleados de una empresa.
 
 
-###Autor
+### Autor
 Javier Jiménez García
 
-###Blog y Redes Sociales
+### Blog y Redes Sociales
 * [Blog](https://javierjg.es/) - Página Personal y Blog
 * [Twitter](https://www.twitter.com/javiermonda/) - Perfil en Twitter
 * [LinkedIn](https://www.linkedin.com/in/javiermonda/) - Perfil en LinkedIn
@@ -20,4 +20,6 @@ Este proyecto está bajo licencia GPL-3.0 - vea el archivo [LICENSE](LICENSE.md)
 
 
 "La vida sería más fácil si pudiésemos ver su código fuente"
+```
 <!-- JavierJG -->
+```
