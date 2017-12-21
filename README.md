@@ -16,7 +16,7 @@ Javier Jiménez García
 
 ## Licencia
 
-Este proyecto está bajo licencia GPL-3.0 - vea el archivo [LICENSE](LICENSE.md) para más detalles
+Este proyecto está bajo licencia GPL-3.0 - vea el archivo [LICENSE](LICENSE) para más detalles
 
 
 "La vida sería más fácil si pudiésemos ver su código fuente"
