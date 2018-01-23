@@ -23,7 +23,7 @@ class TrabajadorController extends Controller{
         $trabajador = DB::table('trabajadores')
                     ->join('departamentos', 'departamentos.id', '=', 'trabajadores.idDepartamentoTrabajador')
                     ->select('trabajadores.id','DNI','foto','nombreApellidos','FechaIni','FechaFin','Observaciones','tipoContrato','vacaciones','departamentos.nombreDepartamento')
-                    ->paginate(5);
+                    ->paginate(20);
         $date = Carbon::now();
         $date = date('d m Y',strtotime($date));
         $ausencia = Ausencia::all();
@@ -41,7 +41,7 @@ class TrabajadorController extends Controller{
     {
         $trabajador = Trabajador::all();
         $departamento = Departamento::all();
-        
+
         return view('trabajadores.create',['trabajador' => $trabajador], ['departamento' => $departamento]);
     }
 
@@ -182,8 +182,8 @@ class TrabajadorController extends Controller{
                     ->where('nombreApellidos', 'LIKE', '%'.$request->search.'%' )
                     ->orwhere('departamentos.nombreDepartamento', 'LIKE', '%'.$request->search.'%' )
                     ->select('trabajadores.id','DNI','foto','nombreApellidos','FechaIni','FechaFin','Observaciones','tipoContrato','vacaciones','departamentos.nombreDepartamento')
-                    ->paginate(5);
-            
+                    ->paginate(20);
+
             $date = Carbon::now();
             $date = date('d m Y',strtotime($date));
             $ausencia = Ausencia::all();
@@ -194,7 +194,7 @@ class TrabajadorController extends Controller{
                     ->join('departamentos', 'departamentos.id', '=', 'trabajadores.idDepartamentoTrabajador')
                     ->where('departamentos.nombreDepartamento', 'LIKE', $request->search2)
                     ->select('trabajadores.id','DNI','foto','nombreApellidos','FechaIni','FechaFin','Observaciones','tipoContrato','vacaciones','departamentos.nombreDepartamento')
-                    ->paginate(5);
+                    ->paginate(20);
             $date = Carbon::now();
             $date = date('d m Y',strtotime($date));
             $ausencia = Ausencia::all();
@@ -252,14 +252,14 @@ class TrabajadorController extends Controller{
     {
         self::destroy($id);
         return redirect()->action('TrabajadorController@index');
-    }  
+    }
 
     /*public function getTrabajadores()
     {
         $trabajadores = Trabajador::select(['nombreApellidos','idDepartamentoTrabajador','vacaciones']);
- 
+
         return Datatables::of($trabajadores)
- 
+
             ->make(true);
     } */
 }
