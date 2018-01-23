@@ -44,6 +44,9 @@ class LoginController extends Controller
         elseif (auth()->user()->email == 'personal@fuerteventuraoasispark.com') {
             return '/rrhh';
         }
+        elseif (auth()->user()->email == 'gestion@fuerteventuraoasispark.com') {
+            return '/rrhh';
+        }
         elseif (auth()->user()->email == 'julian.hernandez@fuerteventuraoasispark.com') {
             return '/servicio-tecnico';
         }

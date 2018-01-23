@@ -2,6 +2,8 @@
   <div class="container">
   @if (Auth::user()->email == 'personal@fuerteventuraoasispark.com')
     <a class="navbar-brand" href="/rrhh">
+  @elseif (Auth::user()->email == 'gestion@fuerteventuraoasispark.com')
+    <a class="navbar-brand" href="/rrhh">
   @elseif (Auth::user()->email == 'julian.hernandez@fuerteventuraoasispark.com')
     <a class="navbar-brand" href="/servicio-tecnico">
   @elseif (Auth::user()->email == 'informatica@fuerteventuraoasispark.com')

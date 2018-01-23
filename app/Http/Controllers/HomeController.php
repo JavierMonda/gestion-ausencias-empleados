@@ -37,16 +37,29 @@ class HomeController extends Controller
                         ->join('trabajadores', 'trabajadores.id', '=', 'ausencias.idTrabajador')
                         ->where('ausencias.fechaAusencia', 'Like', date("Y-m-d").'%')
                         ->select('trabajadores.id','ausencias.idTrabajador','trabajadores.nombreApellidos', 'ausencias.tipoAusencia', 'ausencias.fechaAusencia')
-                        ->paginate(5);
-                        
+                        ->paginate(10);
+
             $departamento = Departamento::all();
             return view('/rrhh',compact('trabajador','ausencia','date','departamento'));
-        } 
+        }
+        elseif (auth()->user()->email == 'gestion@fuerteventuraoasispark.com') {
+            $date = Carbon::now();
+            $date = date('d m Y',strtotime($date));
+            $ausencia = Ausencia::all();
+            $trabajador = DB::table('ausencias')
+                        ->join('trabajadores', 'trabajadores.id', '=', 'ausencias.idTrabajador')
+                        ->where('ausencias.fechaAusencia', 'Like', date("Y-m-d").'%')
+                        ->select('trabajadores.id','ausencias.idTrabajador','trabajadores.nombreApellidos', 'ausencias.tipoAusencia', 'ausencias.fechaAusencia')
+                        ->paginate(10);
+
+            $departamento = Departamento::all();
+            return view('/rrhh',compact('trabajador','ausencia','date','departamento'));
+        }
         elseif (auth()->user()->email == 'julian.hernandez@fuerteventuraoasispark.com')
             return view('/servicio-tecnico');
         elseif (auth()->user()->email == 'informatica@fuerteventuraoasispark.com')
             return view('/admin');
-        else 
+        else
         return view('/');
     }
 }
