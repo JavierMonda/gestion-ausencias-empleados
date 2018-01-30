@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master2')
 
 @section('content')
 
@@ -17,6 +17,7 @@
         <p class="card-text">Fin Contrato: {{ $trabajador->FechaFin }}</p>
         <p class="card-text">Observaciones: {{ $trabajador->Observaciones }}</p>
         <p class="card-text">Tipo de Contrato: {{ $trabajador->tipoContrato }}</p>
+        <p class="card-text">Le pertenecen un total de {{$trabajador->vacaciones}} días de vacaciones</p>
         <p class="card-text">Vacaciones pendientes: {{ $trabajador->vacaciones - $vacaciones }}</p>
         <p class="card-text">Almacén: {{ $trabajador->nombreDepartamento }}</p>
         <table class="table table-hover">
@@ -43,11 +44,72 @@
           </tbody>
         </table>
         <div class="d-flex justify-content-end">
+
           <div class="p-2">
-            <a class="btn btn-success" href="{{ url('/ausencias/create') }}">
-              Alta de Ausencia
-            </a>
+          <!-- Modal Form-->
+                <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">Nuevo Parte</button>
+                <!-- Modal-->
+                <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
+                  <div role="document" class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h4 id="exampleModalLabel" class="modal-title">Nuevo Parte de ausencia</h4>
+                        <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
+                      </div>
+                      <div class="modal-body">
+                        <form method="POST" action="{{ action('ParteController@store') }}">
+                          {{ csrf_field() }}
+                          <fieldset>
+                            <legend>Trabajador: {{$trabajador->nombreApellidos}}</legend>
+                          </fieldset>
+                          <div class="form-group">
+                    					<label for="fecha1">Fecha Inicio</label>
+                    					<input type="date" name="fecha1" id="fecha1" class="form-control" placeholder="Fecha de Inicio">
+                					</div>
+                					<div class="form-group">
+                    					<label for="fecha2">Fecha Fin</label>
+                    					<input type="date" name="fecha2" id="fecha2" class="form-control" placeholder="Fecha de Fin">
+                					</div>
+                					<div class="form-group">
+                						<label for="tipoAusencia">Seleccione Tipo</label>
+                						<select class="custom-select form-control" name="tipoAusencia">
+                							<option value="baja">
+                								baja
+                							</option>
+                							<option value="vacaciones">
+                								vacaciones
+                							</option>
+                							<option value="permiso">
+                								permiso
+                							</option>
+                							<option value="absentismo">
+                								ausencia
+                							</option>
+                						</select>
+                					</div>
+                				    <div class="form-group">
+                    					<label for="descripcion">Descripción</label>
+                    					<input type="text" name="descripcion" id="descripcion" class="form-control" placeholder="Descripción de la ausencia">
+                					</div>
+                					<div class="form-group">
+                    					<label for="idTrabajador">ID del Trabajador</label>
+                							<input type="text" name="idTrabajador" id="idTrabajador" class="form-control" placeholder="{{$trabajador->nombreApellidos}}" value="{{$trabajador->id}}">
+                					</div>
+                            <div class="form-group"><input type="submit" value="Enviar" class="btn btn-primary">
+                          </div>
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-secondary">Cerrar</button>
+                        <!--<button type="button" class="btn btn-primary">Guardar</button>-->
+                      </div>
+                    </div>
+                  </div>
+                </div>
           </div>
+
+
+
           <div class="p-2">
             <a class="btn btn-warning" href="{{ url('/trabajadores/'. $trabajador->id .'/edit/') }}">
               Editar
@@ -70,6 +132,8 @@
         </div>
       </div>
     </div>
+    <div id="calendar"></div>
   </div>
 
-@stop
+
+@endsection

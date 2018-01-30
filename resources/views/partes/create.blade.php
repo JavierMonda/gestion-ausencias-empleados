@@ -7,14 +7,14 @@
 		<div class="card bg-light">
 
 			<div class="card-header">
-				<h4>Alta de Ausencia</h4>
+				<h4>Creación de nuevo Parte de Ausencia</h4>
 			</div>
 			<div class="card-body">
 				<h5 class="card-title">
 					Ingrese todos los datos y pulse Añadir:
 				</h5>
 
-				<form class="form" enctype="multipart/form-data" method="POST" action="">
+        <form class="form" enctype="multipart/form-data" method="POST" action="">
 					{{ csrf_field() }}
 
     				<div class="form-group">
@@ -62,16 +62,6 @@
 								Añadir
 							</button>
 						</div>
-						<div class="p-2">
-							<a class="btn btn-dark" href="{{ url('ausencias') }}">
-					          Ir a Ausencias
-					        </a>
-				        </div>
-				        <div class="p-2">
-							<a class="btn btn-dark" href="{{ url('trabajadores') }}">
-					          Ir a Trabajadores
-					        </a>
-				        </div>
 				    </div>
 				</form>
 

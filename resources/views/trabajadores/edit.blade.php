@@ -1,18 +1,18 @@
 @extends('layouts.master')
 
-@section('content')	
+@section('content')
 
 <div class="container">
 
-	
+
 	<div class="card bg-light">
 		<div class="card-header">
 			<h4>Editar Trabajador</h4>
 		</div>
-	
+
 		<div class="card-body">
 			<h5 class="card-text">Edite los datos siguientes y pulse confirmar:</h5>
-			
+
 			<form class="form" enctype="multipart/form-data" method="POST" action="">
 				{{ method_field('PUT') }}
 
@@ -47,20 +47,13 @@
 					<input type="text" name="tipoContrato" id="tipoContrato" class="form-control" value="{{$trabajador->tipoContrato}}">
 				</div>
 				<div class="form-group">
-					<label for="vacaciones">Vacaciones</label>
-					<input type="number" name="vacaciones" id="vacaciones" class="form-control" value="{{$trabajador->vacaciones}}">
-				</div>
-				<!--<div class="form-group">
-					<label for="nombreDepartamento">Almacén</label>
-					<input type="text" name="nombreDepartamento" id="nombreDepartamento" class="form-control" value="{{$trabajador->nombreDepartamento}}" readonly>
-				</div>-->
-				<div class="form-group">
 					<label for="nombreDepartamento">Selecciona Almacén</label>
 					<select class="custom-select form-control" name="nombreDepartamento">
-					@foreach ($departamento as $d)					
+						<option value="{{$trabajador->nombreDepartamento}}" selected="selected">Actualmente: {{$trabajador->nombreDepartamento}}
+					@foreach ($departamento as $d)
 						<option value="{{ $d->nombreDepartamento }}">
 							{{ $d->nombreDepartamento }}
-						</option>							
+						</option>
 					@endforeach
 					</select>
 				</div>
@@ -69,7 +62,7 @@
 						<button type="submit" class="btn btn-primary">
 							Confirmar
 						</button>
-						<a class="btn btn-secondary" href="{{ URL::previous() }}"> 
+						<a class="btn btn-secondary" href="{{ URL::previous() }}">
 							&lt; Volver
 						</a>
 					</div>
@@ -78,6 +71,6 @@
 		</div>
 	</div>
 </div>
-    
+
 
 @stop

@@ -60,6 +60,10 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::post('trabajos/create', 'TrabajoController@store');
 	Route::put('trabajos/{id}/edit', 'TrabajoController@putEdit');
 
+  Route::resource('partes','ParteController');
+	Route::post('partes/create', 'ParteController@store');
+	Route::put('partes/{id}/edit', 'ParteController@putEdit');
+
 	Route::post('/import-excel', 'ExcelController@importTrabajadores');
 
 	Route::get('trabajadores.list', 'TrabajadorController@trabajadorList')->name('trabajadores.list');

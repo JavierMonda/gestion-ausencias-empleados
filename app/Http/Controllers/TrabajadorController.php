@@ -24,12 +24,15 @@ class TrabajadorController extends Controller{
                     ->join('departamentos', 'departamentos.id', '=', 'trabajadores.idDepartamentoTrabajador')
                     ->select('trabajadores.id','DNI','foto','nombreApellidos','FechaIni','FechaFin','Observaciones','tipoContrato','vacaciones','departamentos.nombreDepartamento')
                     ->paginate(20);
+        $vacaciones = DB::table('ausencias')
+                        ->where('tipoAusencia','=','vacaciones')
+                        ->count('id');
         $date = Carbon::now();
         $date = date('d m Y',strtotime($date));
         $ausencia = Ausencia::all();
         $departamento = Departamento::all();
         $centro = Centro::all();
-        return view('trabajadores.index',compact('trabajador', 'date', 'ausencia', 'departamento', 'centro'));
+        return view('trabajadores.index',compact('trabajador', 'date', 'ausencia', 'departamento', 'centro','vacaciones'));
     }
 
     /**
@@ -53,11 +56,9 @@ class TrabajadorController extends Controller{
      */
     public function store(Request $request)
     {
-        $date = Carbon::createFromDate(2017, 12, 31);
-        //$date->format('d-m-Y');
+        $date = Carbon::createFromDate(2018, 12, 31);
         $fechaInicio = $request->input('FechaIni');
         $fecha = Carbon::createFromFormat('Y-m-d', $fechaInicio);
-        //$fecha->format('d-m-Y');
         $nombreDepartamento = $request->input('nombreDepartamento');
         $departamento = DB::table('departamentos')
                     ->where('nombreDepartamento','=',$nombreDepartamento)
@@ -65,7 +66,6 @@ class TrabajadorController extends Controller{
                     ->first();
         $trabajador = new Trabajador;
         $trabajador->DNI = '00000000A';
-        //$trabajador->foto = $request->input('foto');
         $trabajador->nombreApellidos = $request->input('nombreApellidos');
         $trabajador->FechaIni = $fecha;
         $trabajador->FechaFin = $date;
@@ -98,6 +98,16 @@ class TrabajadorController extends Controller{
                     ->join('departamentos', 'departamentos.id', '=', 'trabajadores.idDepartamentoTrabajador')
                     ->select('trabajadores.id','DNI','foto','nombreApellidos','FechaIni','FechaFin','Observaciones','tipoContrato','vacaciones','departamentos.nombreDepartamento')
                     ->first();
+        $allDay = TRUE;
+        $data = DB::table('ausencias')
+                ->where('ausencias.idTrabajador', '=', $trabajador->id)
+                ->join('trabajadores', 'trabajadores.id', '=', 'ausencias.idTrabajador')
+                ->select('trabajadores.nombreApellidos as title','fechaAusencia as start','fechaAusencia as end','tipoAusencia as description')
+                ->get();
+        $data->toJson();
+                    //$data = Ausencia::get(['id','tipoAusencia as title','fechaAusencia as start','fechaAusencia as end','idTrabajador as Trabajador']);
+
+                    //return Response()->json($data);
 
         $baja = DB::table('ausencias')
                         ->where('idTrabajador','=',$id)
@@ -115,8 +125,9 @@ class TrabajadorController extends Controller{
                         ->where('idTrabajador','=',$id)
                         ->where('tipoAusencia','=','absentismo')
                         ->count('id');
+        $totalVacaciones = $trabajador->vacaciones + $vacaciones;
 
-        return view('trabajadores.show', compact('trabajador', 'baja', 'permiso', 'vacaciones', 'absentismo'));
+        return view('trabajadores.show', compact('trabajador', 'baja', 'permiso', 'vacaciones', 'absentismo','data','totalVacaciones'));
     }
 
     /**
@@ -157,7 +168,7 @@ class TrabajadorController extends Controller{
         $trabajador->FechaFin = $request->input('FechaFin');
         $trabajador->Observaciones = $request->input('Observaciones');
         $trabajador->tipoContrato = $request->input('tipoContrato');
-        $trabajador->vacaciones = $request->input('vacaciones');
+        //$trabajador->vacaciones = $request->input('vacaciones');
         $trabajador->idDepartamentoTrabajador = $departamento->id;
         if ($request->hasFile('foto')) {
             $nombreImg = $request->file('foto')->getClientOriginalName();

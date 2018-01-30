@@ -60,7 +60,15 @@ class EventController extends Controller
      */
     public function show($id)
     {
-        //
+      $allDay = TRUE;
+      $data = DB::table('ausencias')
+              ->where('ausencias.idTrabajador', '=', $id)
+              ->join('trabajadores', 'trabajadores.id', '=', 'ausencias.idTrabajador')
+              ->select('trabajadores.nombreApellidos as title','fechaAusencia as start','fechaAusencia as end','tipoAusencia as description')
+              ->get();
+      //$data = Ausencia::get(['id','tipoAusencia as title','fechaAusencia as start','fechaAusencia as end','idTrabajador as Trabajador']);
+
+      return Response()->json($data);
     }
 
     /**

@@ -57,6 +57,7 @@
         <script>
              $(document).ready(function() {
                  var BASEURL = "{{ url('/') }}";
+                 var ID = "{{ $trabajador->id }}"
                  $('#calendar').fullCalendar({
                      header: {
                          left: 'prev,next today',
@@ -67,7 +68,7 @@
                      editable: true,
                      selectable: true,
                      selectHelper: true,
-                     events: BASEURL + '/events',
+                     events: BASEURL + '/events/' + ID,
 
                  });
 

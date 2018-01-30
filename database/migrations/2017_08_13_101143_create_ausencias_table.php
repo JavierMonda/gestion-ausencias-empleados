@@ -15,11 +15,13 @@ class CreateAusenciasTable extends Migration
     {
         Schema::create('ausencias', function (Blueprint $table) {
             $table->increments('id');
-            $table->datetime('fechaAusencia');
+            $table->date('fechaAusencia');
             $table->enum('tipoAusencia',['baja','vacaciones','absentismo','permiso']);
             $table->string('descripcion',90)->nullable();
             $table->integer('idTrabajador')->unsigned();
+            $table->integer('idParte')->unsigned();
             $table->foreign('idTrabajador')->references('id')->on('trabajadores')->onDelete('restrict')->onUpdate('restrict');
+            $table->foreign('idParte')->references('id')->on('partes')->onDelete('restrict')->onUpdate('restrict');
             $table->unique(['fechaAusencia', 'idTrabajador']);
             $table->timestamps();
         });
@@ -34,6 +36,7 @@ class CreateAusenciasTable extends Migration
     {
         Schema::table('ausencias', function(Blueprint $table) {
             $table->dropForeign('ausencias_idtrabajador_foreign');
+            $table->dropForeign('ausencias_idparte_foreign');
         });
         Schema::dropIfExists('ausencias');
     }

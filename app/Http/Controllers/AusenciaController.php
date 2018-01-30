@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use App\Ausencia;
 use App\Trabajador;
+use App\Parte;
 
 class AusenciaController extends Controller
 {
@@ -56,23 +57,15 @@ class AusenciaController extends Controller
 
         $fecha1 = $request->input('fecha1');
         $fecha2 = $request->input('fecha2');
-        
+
         for($i=$fecha1;$i<=$fecha2;$i = date("Y-m-d", strtotime($i ."+ 1 days"))){
             $fecha = Carbon::createFromFormat('Y-m-d', $i);
-
             $ausencia = new Ausencia;
             $ausencia->fechaAusencia = $fecha;
             $ausencia->tipoAusencia = $request->input('tipoAusencia');
 
-            //Si el registro ya existe, mostrar error
-            
-
             if ($request->input('tipoAusencia') == 'vacaciones') {
                 $trabajador = Trabajador::findOrFail($id);
-                if ($trabajador->vacaciones <= 0)
-                    $trabajador->vacaciones = 0;
-                else
-                    $trabajador->vacaciones = $trabajador->vacaciones - 1;
                 $trabajador->save();
             }
             $ausencia->descripcion = $request->input('descripcion');
@@ -133,6 +126,14 @@ class AusenciaController extends Controller
     public function destroy($id)
     {
         $ausencia = Ausencia::find($id);
+        $vacaciones = $ausencia->tipoAusencia;
+        $idTrabajador = $ausencia->idTrabajador;
+
+        if($vacaciones == 'vacaciones') {
+          $trabajador = Trabajador::find($idTrabajador);
+          $trabajador->vacaciones = $trabajador->vacaciones + 1;
+          $trabajador->save();
+        }
         $ausencia->delete();
         return redirect()->action('AusenciaController@index');
     }
@@ -148,5 +149,5 @@ class AusenciaController extends Controller
     {
         self::destroy($id);
         return redirect()->action('AusenciaController@index');
-    }   
+    }
 }
