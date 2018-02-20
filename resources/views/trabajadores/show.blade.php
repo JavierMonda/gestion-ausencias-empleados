@@ -43,6 +43,37 @@
             </tr>
           </tbody>
         </table>
+        <table class="table table-hover">
+          <thead class="thead-inverse">
+            <tr>
+              <th class="text-center" colspan="5">Partes de Ausencia</th>
+            </tr>
+          </thead>
+          <thead>
+            <tr>
+              <th class="text-center">Número de Parte</th>
+              <th class="text-center">Fecha Inicio</th>
+              <th class="text-center">Fecha Fin</th>
+              <th class="text-center">Tipo de Ausencia</th>
+              <th class="text-center"></th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach($parte as $p)
+            <tr>
+              <th class="text-center">{{ $p->id }}</th>
+              <th class="text-center">{{ $p->inicio }}</th>
+              <th class="text-center">{{ $p->fin }}</th>
+              <th class="text-center">{{ $p->tipoAusencia }}</th>
+              <th class="text-center">
+                <a class="btn btn-success btn-sm" href="{{ url('/partes/' . $p->id ) }}">
+                  Ver
+                </a>
+              </th>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
         <div class="d-flex justify-content-end">
 
           <div class="p-2">
@@ -125,7 +156,7 @@
             </form>
           </div>
           <div class="p-2">
-            <a class="btn btn-secondary" href="{{ URL::previous() }}">
+            <a class="btn btn-secondary" href="{{ url('/trabajadores') }}">
               &lt; Volver
             </a>
           </div>

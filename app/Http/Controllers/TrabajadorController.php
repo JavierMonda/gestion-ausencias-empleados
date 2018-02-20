@@ -24,9 +24,7 @@ class TrabajadorController extends Controller{
                     ->join('departamentos', 'departamentos.id', '=', 'trabajadores.idDepartamentoTrabajador')
                     ->select('trabajadores.id','DNI','foto','nombreApellidos','FechaIni','FechaFin','Observaciones','tipoContrato','vacaciones','departamentos.nombreDepartamento')
                     ->paginate(20);
-        $vacaciones = DB::table('ausencias')
-                        ->where('tipoAusencia','=','vacaciones')
-                        ->count('id');
+        $vacaciones = 0;
         $date = Carbon::now();
         $date = date('d m Y',strtotime($date));
         $ausencia = Ausencia::all();
@@ -126,8 +124,15 @@ class TrabajadorController extends Controller{
                         ->where('tipoAusencia','=','absentismo')
                         ->count('id');
         $totalVacaciones = $trabajador->vacaciones + $vacaciones;
+        $parte = DB::table('partes')
+                    ->join('ausencias', 'ausencias.idParte', '=', 'partes.id')
+                    ->join('trabajadores', 'trabajadores.id', '=', 'ausencias.idTrabajador')
+                    ->where('trabajadores.id','=',$id)
+                    ->select('partes.id as id','partes.inicio','partes.fin','ausencias.tipoAusencia','trabajadores.nombreApellidos')
+                    ->distinct()
+                    ->get();
 
-        return view('trabajadores.show', compact('trabajador', 'baja', 'permiso', 'vacaciones', 'absentismo','data','totalVacaciones'));
+        return view('trabajadores.show', compact('trabajador', 'baja', 'permiso', 'vacaciones', 'absentismo','data','totalVacaciones','parte'));
     }
 
     /**

@@ -135,7 +135,7 @@ class AusenciaController extends Controller
           $trabajador->save();
         }
         $ausencia->delete();
-        return redirect()->action('AusenciaController@index');
+        return back();
     }
 
     /**
@@ -148,6 +148,6 @@ class AusenciaController extends Controller
     public function update(Request $request, $id)
     {
         self::destroy($id);
-        return redirect()->action('AusenciaController@index');
+        return back();
     }
 }

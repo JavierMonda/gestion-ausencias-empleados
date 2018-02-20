@@ -86,7 +86,8 @@ class ParteController extends Controller
         }
 
 
-        return redirect()->action('ParteController@index');
+        //return redirect()->action('ParteController@index');
+        return back();
     }
 
     /**

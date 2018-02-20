@@ -92,7 +92,6 @@
 				<tr>
 					<td class="text-center estadoAusencia" style="background-color: white">En el trabajo</td>
 					@foreach ( $ausencia as $a )
-
 						@if ($a->idTrabajador == $t->id)
 							@if ($a->fechaAusencia == date("Y-m-d"))
 								@if ($a->tipoAusencia == 'baja')
@@ -122,7 +121,16 @@
 
 					<td class="text-center">{{$t->nombreApellidos}}</td>
 					<td class="text-center">{{$t->nombreDepartamento}}</td>
-					<td class="text-center">{{$t->vacaciones - $vacaciones}}</td>
+					<?php $vacaciones = 0; ?>
+					@foreach ( $ausencia as $au )
+						@if ($au->idTrabajador == $t->id)
+							@if ($au->tipoAusencia == 'vacaciones')
+								<?php $vacaciones = $vacaciones + 1;?>
+							@endif
+						@endif
+					@endforeach
+					<td class="text-center">{{ $t->vacaciones - $vacaciones }}</td>
+
 					<td class="text-center"><a class="btn btn-success btn-sm" href="{{ url('/trabajadores/' . $t->id ) }}">
 				            <i class="fa fa-address-card" aria-hidden="true"></i>
 				        </a>
