@@ -21,7 +21,7 @@ class CreateAusenciasTable extends Migration
             $table->integer('idTrabajador')->unsigned();
             $table->integer('idParte')->unsigned();
             $table->foreign('idTrabajador')->references('id')->on('trabajadores')->onDelete('restrict')->onUpdate('restrict');
-            $table->foreign('idParte')->references('id')->on('partes')->onDelete('restrict')->onUpdate('restrict');
+            $table->foreign('idParte')->references('id')->on('partes')->onDelete('cascade')->onUpdate('cascade');
             $table->unique(['fechaAusencia', 'idTrabajador']);
             $table->timestamps();
         });

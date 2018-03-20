@@ -46,7 +46,7 @@
         <table class="table table-hover">
           <thead class="thead-inverse">
             <tr>
-              <th class="text-center" colspan="5">Partes de Ausencia</th>
+              <th class="text-center" colspan="6">Partes de Ausencia</th>
             </tr>
           </thead>
           <thead>
@@ -55,7 +55,7 @@
               <th class="text-center">Fecha Inicio</th>
               <th class="text-center">Fecha Fin</th>
               <th class="text-center">Tipo de Ausencia</th>
-              <th class="text-center"></th>
+              <th class="text-center" colspan="2"></th>
             </tr>
           </thead>
           <tbody>
@@ -69,6 +69,15 @@
                 <a class="btn btn-success btn-sm" href="{{ url('/partes/' . $p->id ) }}">
                   Ver
                 </a>
+                <th>
+                  <form action="{{ action('ParteController@destroy', $p->id) }}" method="POST">
+                    {{ method_field('PUT') }}
+                    {!! csrf_field() !!}
+                    <button type="submit" class="btn btn-danger btn-sm">
+                      Borrar
+                    </button>
+                  </form>
+                </th>
               </th>
             </tr>
             @endforeach

@@ -126,9 +126,10 @@ class ParteController extends Controller
      * @param  \App\Parte  $parte
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Parte $parte)
+    public function update(Request $request, $id)
     {
-        //
+        self::destroy($id);
+        return back();
     }
 
     /**
@@ -137,8 +138,10 @@ class ParteController extends Controller
      * @param  \App\Parte  $parte
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Parte $parte)
+    public function destroy($id)
     {
-        //
+        $parte = Parte::find($id);
+        $parte->delete();
+        return back();
     }
 }
