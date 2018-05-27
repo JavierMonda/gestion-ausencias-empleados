@@ -4,7 +4,7 @@
 
   <div class="container">
 
-        
+
       <div class="card bg-light">
         <div class="card-header">
           <h4>{{ $departamento->nombreDepartamento }}</h4>
@@ -38,8 +38,10 @@
           </div>
           </div>
         </div>
+
+        <p>{{ $trabajador->nombreApellidos }}</p>
       </div>
-   
+        <div id="calendar"></div>
   </div>
 
 @stop

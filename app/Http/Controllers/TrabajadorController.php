@@ -68,8 +68,14 @@ class TrabajadorController extends Controller{
         $trabajador->FechaIni = $fecha;
         $trabajador->FechaFin = $date;
         $trabajador->Observaciones = $request->input('Observaciones');
-        $trabajador->tipoContrato = 'comercio';
-        $trabajador->vacaciones = 30;
+        $trabajador->tipoContrato = $request->input('tipoContrato');
+        if (($request->input('tipoContrato')) == 'camareros') {
+          $trabajador->vacaciones = 48;
+        }else {
+          $trabajador->vacaciones = 30;
+        }
+
+
         $trabajador->idDepartamentoTrabajador = $departamento->id;
         if ($request->hasFile('foto')) {
             $nombreImg = $request->file('foto')->getClientOriginalName();
@@ -103,9 +109,6 @@ class TrabajadorController extends Controller{
                 ->select('trabajadores.nombreApellidos as title','fechaAusencia as start','fechaAusencia as end','tipoAusencia as description')
                 ->get();
         $data->toJson();
-                    //$data = Ausencia::get(['id','tipoAusencia as title','fechaAusencia as start','fechaAusencia as end','idTrabajador as Trabajador']);
-
-                    //return Response()->json($data);
 
         $baja = DB::table('ausencias')
                         ->where('idTrabajador','=',$id)
@@ -128,9 +131,14 @@ class TrabajadorController extends Controller{
                     ->join('ausencias', 'ausencias.idParte', '=', 'partes.id')
                     ->join('trabajadores', 'trabajadores.id', '=', 'ausencias.idTrabajador')
                     ->where('trabajadores.id','=',$id)
-                    ->select('partes.id as id','partes.inicio','partes.fin','ausencias.tipoAusencia','trabajadores.nombreApellidos')
+                    ->select('partes.id as id',DB::RAW("DATE_FORMAT(partes.inicio, '%d/%m/%y')as inicio"),
+                              DB::RAW("DATE_FORMAT(partes.fin, '%d/%m/%y')as fin"),'ausencias.tipoAusencia',
+                              'trabajadores.nombreApellidos',DB::raw("DATEDIFF(partes.fin,partes.inicio)as dias"),
+                              DB::RAW("COUNT(ausencias.id)as dias2"))
+                    ->groupBy('partes.id','partes.inicio','partes.fin','ausencias.tipoAusencia','trabajadores.nombreApellidos')
                     ->distinct()
                     ->get();
+
 
         return view('trabajadores.show', compact('trabajador', 'baja', 'permiso', 'vacaciones', 'absentismo','data','totalVacaciones','parte'));
     }

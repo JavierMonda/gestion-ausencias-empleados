@@ -7,13 +7,13 @@
 		<div class="card bg-light">
 
 			<div class="card-header">
-				<h4>Creación de nuevo Trabajador</h4>		
+				<h4>Creación de nuevo Trabajador</h4>
 			</div>
 			<div class="card-body">
 				<h5 class="card-title">
 					Ingrese todos los datos y pulse Añadir:
 				</h5>
-				
+
 				<form class="form" enctype="multipart/form-data" method="POST" action="">
 					{{ csrf_field() }}
 
@@ -38,12 +38,16 @@
     					<input type="text" name="Observaciones" id="Observaciones" class="form-control" placeholder="Observaciones">
 					</div>
 					<div class="form-group">
+    					<label for="tipoContrato">Convenio</label>
+    					<input type="text" name="tipoContrato" id="tipoContrato" class="form-control" placeholder="tipoContrato">
+					</div>
+					<div class="form-group">
     					<label for="nombreDepartamento">Selecciona Almacén</label>
 						<select class="custom-select form-control" name="nombreDepartamento">
-						@foreach ($departamento as $d)					
+						@foreach ($departamento as $d)
 							<option value="{{ $d->nombreDepartamento }}">
 								{{ $d->nombreDepartamento }}
-							</option>							
+							</option>
 						@endforeach
 						</select>
 					</div>
@@ -62,7 +66,7 @@
 				    </div>
 				</form>
 
-				
+
 			</div>
 		</div>
 	</div>

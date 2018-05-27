@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
+use Yajra\Datatables\Datatables;
+use Redirect;
 use App\Departamento;
 use App\Empresa;
 use App\Centro;
+use App\Trabajador;
 
 class DepartamentoController extends Controller
 {
@@ -33,7 +37,7 @@ class DepartamentoController extends Controller
     {
         $departamento = Departamento::all();
         $centro = Centro::all();
-        
+
         return view('departamentos.create',['departamento' => $departamento], ['centro' => $centro]);
     }
 
@@ -73,8 +77,17 @@ class DepartamentoController extends Controller
                     ->join('centros', 'centros.id', '=', 'departamentos.idCentroDepartamento')
                     ->select('departamentos.id','departamentos.nombreDepartamento','departamentos.TlfDepartamento','departamentos.JefeDepartamento','centros.nombreCentro')
                     ->first();
-
-        return view('departamentos.show',compact('departamento'));
+        $trabajador = DB::table('trabajadores')
+                    ->where('trabajadores.idDepartamentoTrabajador', '=',$departamento->id)
+                    ->distinct('trabajadores.nombreApellidos','trabajadores.id','trabajadores.idDepartamentoTrabajador')
+                    ->first();
+        $allDay = TRUE;
+        $data = DB::table('ausencias')
+                ->select(DB::raw("(SELECT nombreApellidos FROM trabajadores
+                WHERE id = $trabajador->id) as title"),'fechaAusencia as start','fechaAusencia as end','tipoAusencia as description')
+                ->get();
+        $data->toJson();
+        return view('departamentos.show',compact('departamento','trabajador','data'));
     }
 
     /**
@@ -114,7 +127,7 @@ class DepartamentoController extends Controller
     {
         $departamento = Departamento::find($id);
         $departamento->delete();
-        
+
         return redirect()->action('DepartamentoController@index');
     }
 
@@ -129,5 +142,5 @@ class DepartamentoController extends Controller
     {
         self::destroy($id);
         return redirect()->action('DepartamentoController@index');
-    }   
+    }
 }

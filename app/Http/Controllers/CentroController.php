@@ -69,6 +69,7 @@ class CentroController extends Controller
                     ->join('empresas', 'empresas.id', '=', 'centros.idEmpresa')
                     ->select('centros.id','centros.nombreCentro','empresas.nombreEmpresa')
                     ->first();
+
         return view('centros.show',compact('centro'));
     }
 
@@ -119,5 +120,5 @@ class CentroController extends Controller
     {
         self::destroy($id);
         return redirect()->action('CentroController@index');
-    }   
+    }
 }

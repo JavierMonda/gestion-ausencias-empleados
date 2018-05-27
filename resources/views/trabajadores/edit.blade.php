@@ -43,8 +43,16 @@
 					<input type="text" name="Observaciones" id="Observaciones" class="form-control" value="{{$trabajador->Observaciones}}">
 				</div>
 				<div class="form-group">
-					<label for="tipoContrato">Tipo de Contrato</label>
-					<input type="text" name="tipoContrato" id="tipoContrato" class="form-control" value="{{$trabajador->tipoContrato}}">
+					<label for="tipoContrato">Convenio</label>
+					<select class="custom-select form-control" name="tipoContrato">
+						<option value="{{$trabajador->tipoContrato}}" selected="selected">Actualmente: {{$trabajador->tipoContrato}}
+						<option value="oficina">
+							Oficina (30 días de vacaciones)
+						</option>
+						<option value="camareros">
+							Camareros (48 días de vacaciones)
+						</option>
+					</select>
 				</div>
 				<div class="form-group">
 					<label for="nombreDepartamento">Selecciona Almacén</label>

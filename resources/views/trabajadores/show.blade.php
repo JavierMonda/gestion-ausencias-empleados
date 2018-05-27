@@ -46,12 +46,13 @@
         <table class="table table-hover">
           <thead class="thead-inverse">
             <tr>
-              <th class="text-center" colspan="6">Partes de Ausencia</th>
+              <th class="text-center" colspan="7">Partes de Ausencia</th>
             </tr>
           </thead>
           <thead>
             <tr>
               <th class="text-center">Número de Parte</th>
+              <th class="text-center">Días</th>
               <th class="text-center">Fecha Inicio</th>
               <th class="text-center">Fecha Fin</th>
               <th class="text-center">Tipo de Ausencia</th>
@@ -62,6 +63,7 @@
             @foreach($parte as $p)
             <tr>
               <th class="text-center">{{ $p->id }}</th>
+              <th class="text-center">{{ $p->dias2}}</th>
               <th class="text-center">{{ $p->inicio }}</th>
               <th class="text-center">{{ $p->fin }}</th>
               <th class="text-center">{{ $p->tipoAusencia }}</th>
@@ -113,11 +115,11 @@
                 					<div class="form-group">
                 						<label for="tipoAusencia">Seleccione Tipo</label>
                 						<select class="custom-select form-control" name="tipoAusencia">
-                							<option value="baja">
-                								baja
-                							</option>
                 							<option value="vacaciones">
                 								vacaciones
+                							</option>
+                							<option value="baja">
+                								baja
                 							</option>
                 							<option value="permiso">
                 								permiso
