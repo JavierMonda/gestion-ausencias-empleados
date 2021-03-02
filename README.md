@@ -12,7 +12,7 @@ Javier Jiménez García
 ### Blog y Redes Sociales
 * [Blog](https://javierjg.es/) - Página Personal y Blog
 * [Twitter](https://www.twitter.com/javiermonda/) - Perfil en Twitter
-* [LinkedIn](https://www.linkedin.com/in/javiermonda/) - Perfil en LinkedIn
+* [LinkedIn](https://www.linkedin.com/in/javierjg/) - Perfil en LinkedIn
 
 ## Licencia
 
